@@ -48,7 +48,7 @@ namespace Amnon_sProjects.Sudoku
             return this._board;
         }
 
-        // ------------------------- Shuffle a board using  Fisher-Yates shuffle: -------------------
+        // ------------------------- Shuffle a list using  Fisher-Yates shuffle: -------------------
        
         public static void Shuffle(IList<int> list)
         {
