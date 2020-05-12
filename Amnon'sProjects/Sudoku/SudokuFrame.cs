@@ -107,7 +107,7 @@ namespace Amnon_sProjects.Sudoku
         private void UpdateBoardButtonsValue()
         {
             var generator = new SudokoGenerator();
-            this._currBoard = generator.generateOne();
+            this._currBoard = generator.GetGeneratedBoard();
             this._haveSolution = true;
             var boardToSolve = this.PlaceZeroes(this._currBoard);
             for (var row = 0; row < RowAmount; row++)
