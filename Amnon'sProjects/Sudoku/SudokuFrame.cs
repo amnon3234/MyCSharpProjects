@@ -97,7 +97,7 @@ namespace Amnon_sProjects.Sudoku
             cube.Tag = row + ";" + col;
             cube.Click += this.gameBoardButton_Click;
             cube.KeyPress += SudokuFrame_KeyPress;
-            cube.ForeColor = new Color( /* Color [White] */);
+            cube.ForeColor = Color.White;
             cube.Top = row * (ButtonHeight + SpaceBetweenButtons);
             cube.Left = col * (ButtonWidth + SpaceBetweenButtons);
             cube.Row = row;
