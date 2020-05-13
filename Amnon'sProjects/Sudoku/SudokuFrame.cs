@@ -156,6 +156,8 @@ namespace Amnon_sProjects.Sudoku
                     for (var row = 0; row < RowAmount; row++)
                     for (var col = 0; col < ColAmount; col++)
                     {
+                        this._currBoard[row, col] = 0;
+                        this._currBoardWithZeroes[row, col] = 0;
                         this._buttons[row][col].Text = "";
                         this._buttons[row][col].Enabled = true;
                         this._buttons[row][col].FlatAppearance.BorderSize = 0;
