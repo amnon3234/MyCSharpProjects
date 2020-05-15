@@ -12,12 +12,10 @@ namespace Amnon_sProjects.Sudoku
         private const int ColAmount = 9;
         private readonly int[,] _board;
         private readonly List<int> _numberList;
-        private readonly SudokoSolver _solver;
 
         //Ctor
         public SudokoGenerator()
         {
-            this._solver = new SudokoSolver();
             this._board = new int[RowAmount, ColAmount];
             this._numberList = new List<int>();
             for(int i = 1 ; i <= 9 ; i++ )
@@ -27,11 +25,12 @@ namespace Amnon_sProjects.Sudoku
         // -------------------------------------- Generate a board ----------------------------------
         private bool Generate()
         {
-            SudokoSolver.Cube aCube = this._solver.FindFirstEmpty(this._board);
+            SudokoSolver.Cube aCube = SudokoSolver.FindFirstEmpty(this._board);
             if (aCube is null)
                 return true;
             Shuffle(this._numberList);
-            foreach (var value in this._numberList.Where(value => this._solver.IsValid2(this._board, value, aCube)).ToArray())
+            foreach (var value in this._numberList.Where(
+                value => SudokoSolver.IsValid2(this._board, value, aCube)).ToArray())
             {
                 this._board[aCube.CubeRow, aCube.CubeCol] = value;
                 if (this.Generate())

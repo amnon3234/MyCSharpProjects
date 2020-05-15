@@ -9,8 +9,8 @@ namespace Amnon_sProjects.Sudoku
     {
         //Data
 
-        private const int RowAmount = 9;
-        private const int ColAmount = 9;
+        private static int RowAmount = 9;
+        private static int ColAmount = 9;
 
         public class Cube
         {
@@ -24,15 +24,15 @@ namespace Amnon_sProjects.Sudoku
         }
 
         //----------------------------------------- Solve -----------------------------------------------
-        public bool Solve(int[,] aBoard)
+        public static bool Solve(int[,] aBoard)
         {
-            var firstEmpty = this.FindFirstEmpty(aBoard);
+            var firstEmpty = FindFirstEmpty(aBoard); 
             if (firstEmpty == null)
                 return true;
 
             int row = firstEmpty.CubeRow, col = firstEmpty.CubeCol;
             for(int index = 1; index < 10; index++)
-                if (this.IsValid2(aBoard, index, firstEmpty))
+                if (IsValid2(aBoard, index, firstEmpty))
                 {
                     aBoard[row, col] = index;
                     if (Solve(aBoard))
@@ -44,7 +44,7 @@ namespace Amnon_sProjects.Sudoku
         }
 
         //---------------------------------- Find first empty cube --------------------------------------
-        public Cube FindFirstEmpty(int [,] aBoard)
+        public static Cube FindFirstEmpty(int [,] aBoard)
         {
             for (int row = 0; row < RowAmount; row++)
                 for (int col = 0; col < ColAmount; col++)
@@ -54,7 +54,7 @@ namespace Amnon_sProjects.Sudoku
         }
 
         //--------------------------- Check if current cube value is valid ------------------------------
-        public List<Cube> IsValid(int [,] aBoard, int value, Cube cubePos)
+        public static List<Cube> IsValid(int [,] aBoard, int value, Cube cubePos)
         {
             var problematicCubes = new List<Cube>();
 
@@ -79,7 +79,7 @@ namespace Amnon_sProjects.Sudoku
             return problematicCubes;
         }
 
-        public bool IsValid2(int[,] aBoard, int value, Cube cubePos)
+        public static bool IsValid2(int[,] aBoard, int value, Cube cubePos)
         {
             // Check row
             for (int col = 0; col < ColAmount; col++)
