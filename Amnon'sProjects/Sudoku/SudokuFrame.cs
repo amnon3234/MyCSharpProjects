@@ -104,7 +104,7 @@ namespace Amnon_sProjects.Sudoku
         //-----------------------------  Generate Sudoku board   --------------------------------
         private void UpdateBoardButtonsValue()
         {
-            var generator = new SudokoGenerator();
+            var generator = new SudokuGenerator();
             this._currBoard = generator.GetGeneratedBoard();
             this._haveSolution = true;
             var boardToSolve = this.PlaceZeroes(this._currBoard);
@@ -203,8 +203,8 @@ namespace Amnon_sProjects.Sudoku
                 return;
 
             int row = this._pressed.Row, col = this._pressed.Col;
-            var problems = SudokoSolver.IsValid(this._currBoardWithZeroes,
-                this._currBoardWithZeroes[row, col], new SudokoSolver.Cube(row, col));
+            var problems = SudokuSolver.IsValid(this._currBoardWithZeroes,
+                this._currBoardWithZeroes[row, col], new SudokuSolver.Cube(row, col));
             foreach (var cube in problems)
             {
                 this._problemNumber--;
@@ -215,8 +215,8 @@ namespace Amnon_sProjects.Sudoku
             this._pressed.Text = e.KeyChar.ToString();
             this._currBoardWithZeroes[row, col] = e.KeyChar - '0';
             
-            problems = SudokoSolver.IsValid(this._currBoardWithZeroes,
-               this._currBoardWithZeroes[row,col], new SudokoSolver.Cube(row,col) );
+            problems = SudokuSolver.IsValid(this._currBoardWithZeroes,
+               this._currBoardWithZeroes[row,col], new SudokuSolver.Cube(row,col) );
             foreach (var cube in problems)
             {
                 this._problemNumber++;
@@ -224,7 +224,7 @@ namespace Amnon_sProjects.Sudoku
                 this._buttons[cube.CubeRow][cube.CubeCol].FlatAppearance.BorderColor = Color.Red;
             }
 
-            if (this._problemNumber == 0 && SudokoSolver.FindFirstEmpty(this._currBoardWithZeroes) == null)
+            if (this._problemNumber == 0 && SudokuSolver.FindFirstEmpty(this._currBoardWithZeroes) == null)
             {
                 for (var r = 0; r < RowAmount; r++)
                     for (var c = 0; c < ColAmount; c++)
@@ -239,7 +239,7 @@ namespace Amnon_sProjects.Sudoku
 
         private async Task<bool> GraphicalSolverAsync(int[,] aBoard)
         {
-            var firstEmpty = SudokoSolver.FindFirstEmpty(aBoard);
+            var firstEmpty = SudokuSolver.FindFirstEmpty(aBoard);
             if (firstEmpty == null)
                 return true;
             
@@ -249,7 +249,7 @@ namespace Amnon_sProjects.Sudoku
             curr.BackColor = Color.Green;
             await Task.Delay(1);
             for (var index = 1; index < 10; index++)
-                if (SudokoSolver.IsValid2(aBoard, index, firstEmpty))
+                if (SudokuSolver.IsValid2(aBoard, index, firstEmpty))
                 {
                     aBoard[row, col] = index;
                     curr.Text = index.ToString();

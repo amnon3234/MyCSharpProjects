@@ -5,7 +5,7 @@ namespace Amnon_sProjects.Sudoku
     /*
      * Solve by using backTrace algorithm
      */
-    internal class SudokoSolver
+    internal class SudokuSolver
     {
         //Data
 

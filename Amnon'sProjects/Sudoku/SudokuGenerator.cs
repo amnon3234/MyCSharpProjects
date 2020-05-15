@@ -4,7 +4,7 @@ using System.Linq;
 
 namespace Amnon_sProjects.Sudoku
 {
-    internal class SudokoGenerator
+    internal class SudokuGenerator
     {
         // Data
         private static readonly Random Random = new Random();
@@ -14,7 +14,7 @@ namespace Amnon_sProjects.Sudoku
         private readonly List<int> _numberList;
 
         //Ctor
-        public SudokoGenerator()
+        public SudokuGenerator()
         {
             this._board = new int[RowAmount, ColAmount];
             this._numberList = new List<int>();
@@ -25,12 +25,12 @@ namespace Amnon_sProjects.Sudoku
         // -------------------------------------- Generate a board ----------------------------------
         private bool Generate()
         {
-            SudokoSolver.Cube aCube = SudokoSolver.FindFirstEmpty(this._board);
+            SudokuSolver.Cube aCube = SudokuSolver.FindFirstEmpty(this._board);
             if (aCube is null)
                 return true;
             Shuffle(this._numberList);
             foreach (var value in this._numberList.Where(
-                value => SudokoSolver.IsValid2(this._board, value, aCube)).ToArray())
+                value => SudokuSolver.IsValid2(this._board, value, aCube)).ToArray())
             {
                 this._board[aCube.CubeRow, aCube.CubeCol] = value;
                 if (this.Generate())
