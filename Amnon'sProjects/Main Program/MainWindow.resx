@@ -118,6 +118,16 @@
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
   <assembly alias="System.Drawing" name="System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a" />
+  <data name="toShortestPath.Image" type="System.Drawing.Bitmap, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
+    <value>
+        iVBORw0KGgoAAAANSUhEUgAAABAAAAAQCAYAAAAf8/9hAAAABGdBTUEAALGPC/xhBQAAAQtJREFUOE+9
+        kD1LQmEYhk+EQ1MRRmXg0KCLBBIOfbjUpEMUtOjoD3AvcXWrn1FQQb+g3VFwcPNHiNEQ9XY973tz8oDh
+        CaILLg7P/dwPnHOif8E5t4tnuIenitPD0QiNDz2PtUoHBw/hzvOK21qlww7Q3uIdG4p/B4dZrGicD4U6
+        3mIH84pjyDaxpTEJixucZYL7WnuYV/FE4zeERfyU9zhA40WVGLItfNIYIGhaG/qay2F0E19YBMWj0Hdv
+        2MZHPzk3VCUB+TVWNfpgCZ9xFvucmioxZDu4gRlFAYIVvENjipdaeZiXcQ27WFKcRKUxXuEFHuAhnqP9
+        l56qP0OpgutYwBzaKxe0/mui6At21UIQGFDuEQAAAABJRU5ErkJggg==
+</value>
+  </data>
   <data name="toSudoku.Image" type="System.Drawing.Bitmap, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
     <value>
         iVBORw0KGgoAAAANSUhEUgAAABAAAAAQCAYAAAAf8/9hAAAABGdBTUEAALGPC/xhBQAAAKBJREFUOE/F

@@ -51,7 +51,7 @@ namespace Amnon_sProjects.Main_Program
 
         private void MenuButton_Click(object sender, EventArgs e)
         {
-            var curr = sender is Button ? (Button) sender : null;
+            Button curr = sender is Button ? (Button) sender : null;
             if (curr == null) return;
             sidePanel.Top = curr.Top;
             switch (curr.Name)
@@ -61,6 +61,9 @@ namespace Amnon_sProjects.Main_Program
                     break;
                 case "toSudoku":
                     this.sudokuFrame1.BringToFront();
+                    break;
+                case "toShortestPath":
+                    this.shortestPathFrame1.BringToFront();
                     break;
             }
         }

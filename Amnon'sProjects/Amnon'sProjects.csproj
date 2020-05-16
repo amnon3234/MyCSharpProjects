@@ -60,6 +60,15 @@
     </Compile>
     <Compile Include="Main Program\Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="ShortestPath\Edge.cs" />
+    <Compile Include="ShortestPath\Graph.cs" />
+    <Compile Include="ShortestPath\ShortestPathFrame.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="ShortestPath\ShortestPathFrame.Designer.cs">
+      <DependentUpon>ShortestPathFrame.cs</DependentUpon>
+    </Compile>
+    <Compile Include="ShortestPath\Vertex.cs" />
     <Compile Include="Sudoku\SudokuGenerator.cs" />
     <Compile Include="Sudoku\SudokuSolver.cs" />
     <Compile Include="Sudoku\SudokuFrame.cs">
@@ -83,6 +92,9 @@
       <AutoGen>True</AutoGen>
       <DependentUpon>Resources.resx</DependentUpon>
     </Compile>
+    <EmbeddedResource Include="ShortestPath\ShortestPathFrame.resx">
+      <DependentUpon>ShortestPathFrame.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="Sudoku\SudokuFrame.resx">
       <DependentUpon>SudokuFrame.cs</DependentUpon>
     </EmbeddedResource>

@@ -48,11 +48,11 @@ namespace Amnon_sProjects.Sudoku
 
         private void DrawABoard()
         {
-            var colorFlag = true;
+            bool colorFlag = true;
 
-            for (var row = 0; row < RowAmount; row++)
+            for (int row = 0; row < RowAmount; row++)
             {
-                var newRow = new List<CubeButton>();
+                List<CubeButton> newRow = new List<CubeButton>();
                 this._buttons.Add(newRow);
                 if (row % 3 == 0 && row != 0) colorFlag = !colorFlag;
 
