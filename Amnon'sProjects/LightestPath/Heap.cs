@@ -94,6 +94,16 @@ namespace Amnon_sProjects.ShortestPath
             return returnValue; // Remove heap root and return it's value
         }
 
+        public bool Remove(T elementToRemove)
+        {
+            if (!this._heap.Contains(elementToRemove)) return false;
+            bool output = this._heap.Remove(elementToRemove);
+            this._heapSize -= 1;
+            this.HeapifyDown();
+            return output;
+        }
+
+
         public void Insert(T element)
         {
             this._heap.Add(element);

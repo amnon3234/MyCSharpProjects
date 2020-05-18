@@ -109,14 +109,6 @@ namespace Amnon_sProjects.LightestPath
             this._y = -1;
         }
 
-        private void button1_Click(object sender, System.EventArgs e)
-        {
-            StatePosition startPosition = new StatePosition(StartingPointY, StartingPointX);
-            StatePosition endPosition = new StatePosition(EndingPointY, EndingPointX);
-            SearchableMatrix problem = new SearchableMatrix(this._grid, startPosition,
-                endPosition, RowAmount, ColAmount);
-            this.GraphicalPathFinder(problem,true);
-        }
 
         // -------------------------- Path finder algorithm -----------------------
         /**
@@ -124,7 +116,9 @@ namespace Amnon_sProjects.LightestPath
          *          Searching the fastest and lightest path to the goal state using
          *          dijkstra and a star algorithm. 
          * </summary>
-         * <
+         * <returns>
+         *          There is a path between the two dots ? true : false
+         * </returns>
          */
         private bool GraphicalPathFinder(ISearchable<StatePosition> searchable , bool isAStar)
         {
@@ -165,6 +159,65 @@ namespace Amnon_sProjects.LightestPath
                     {
                         var temp = minHeap.GetElement(neigh);
                         if (temp.SCost <= neigh.SCost) continue;
+                        minHeap.Insert(neigh);
+                    }
+                }
+            }
+
+            // There is no path 
+            return false;
+        }
+
+        /**
+         * <summary>
+         *          Searching the fastest and lightest path to the goal state using
+         *          Best First Search algorithm. 
+         * </summary>
+         * <returns>
+         *          There is a path between the two dots ? true : false
+         * </returns>
+         */
+        private bool GraphicalBestFirstSearch(ISearchable<StatePosition> searchable)
+        {
+            var source = searchable.GetInitialState();
+            var minHeap = new Heap<State<StatePosition>>(true); 
+            var visitedSet = new HashSet<State<StatePosition>>(); // A set of states already evaluated
+
+            // Initialize source
+            minHeap.Insert(source);
+            visitedSet.Add(source);
+
+            while (!minHeap.IsEmpty)
+            {
+                var curr = minHeap.Remove();
+                visitedSet.Add(curr);
+                
+                // If the algorithm found the goal state
+                if (searchable.IsGoalState(curr))
+                {
+                    this.GraphicalTraceTrack(curr);
+                    return true;
+                }
+
+                // Color if current state != source
+                if (!curr.Equals(source))
+                    this._graphics.FillRectangle(new SolidBrush(Color.LightBlue), new Rectangle(new Point(
+                            curr.SValue.Col * ButtonWidth, curr.SValue.Row * ButtonHeight),
+                        new Size(ButtonWidth, ButtonHeight)));
+
+                // For each state neighbor
+                foreach (var neigh in searchable.GetAllPossibleStates(curr))
+                {
+                    if (!minHeap.Contains(neigh) && !visitedSet.Contains(neigh))
+                    {
+                        neigh.Father = curr;
+                        minHeap.Insert(neigh);
+                    }
+                    else if(!visitedSet.Contains(neigh))
+                    {
+                        var temp = minHeap.GetElement(neigh);
+                        if (temp.SCost <= neigh.SCost) continue;
+                        minHeap.Remove(temp);
                         minHeap.Insert(neigh);
                     }
                 }
@@ -239,27 +292,3 @@ namespace Amnon_sProjects.LightestPath
         }
     }
 }
-
-
-
-/*
- * LinkedHashSet<State<T>> visitedSet = new LinkedHashSet<>(); // A set of states already evaluated
-		super.minHeap.add(searchable.getInitialState()); // A priority queue of states to be evaluated
-		
-		while(!super.minHeap.isEmpty()) {
-			State<T> n = super.pollFromHeap();
-			visitedSet.add(n);
-			if(searchable.isGoalState(n))
-				return super.backTrace(n);
-			List<State<T>> successors = searchable.getAllPossibleStates(n);
-			for(State<T> successor : successors) 
-				if(!super.minHeap.contains(successor) && !visitedSet.contains(successor)) {
-					successor.setFather(n);
-					super.minHeap.add(successor);
-				}else if(!visitedSet.contains(successor) && successor.getsCost() < this.getCost(super.minHeap.iterator(), successor) ) {
-					super.minHeap.remove(successor);
-					super.minHeap.add(successor);
-				}	
-		}
-		return null;
- */
