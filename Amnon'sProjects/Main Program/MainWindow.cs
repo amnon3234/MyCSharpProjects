@@ -63,7 +63,7 @@ namespace Amnon_sProjects.Main_Program
                     this.sudokuFrame1.BringToFront();
                     break;
                 case "toShortestPath":
-                    this.shortestPathFrame1.BringToFront();
+                    this.LightestPathFrame1.BringToFront();
                     break;
             }
         }

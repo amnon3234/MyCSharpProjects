@@ -50,7 +50,7 @@
             this.sudokuFrame1 = new Amnon_sProjects.Sudoku.SudokuFrame();
             this.homeFrame1 = new Amnon_sProjects.HomeFrame();
             this.sudokuFrame2 = new Amnon_sProjects.Sudoku.SudokuFrame();
-            this.shortestPathFrame1 = new Amnon_sProjects.ShortestPath.ShortestPathFrame();
+            this.LightestPathFrame1 = new Amnon_sProjects.LightestPath.LightestPathFrame();
             this.leftDockedPanel.SuspendLayout();
             this.pictuerPanel.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).BeginInit();
@@ -326,19 +326,19 @@
             this.sudokuFrame2.Size = new System.Drawing.Size(1120, 540);
             this.sudokuFrame2.TabIndex = 13;
             // 
-            // shortestPathFrame1
+            // LightestPathFrame1
             // 
-            this.shortestPathFrame1.Location = new System.Drawing.Point(252, 192);
-            this.shortestPathFrame1.Name = "shortestPathFrame1";
-            this.shortestPathFrame1.Size = new System.Drawing.Size(1024, 521);
-            this.shortestPathFrame1.TabIndex = 13;
+            this.LightestPathFrame1.Location = new System.Drawing.Point(252, 192);
+            this.LightestPathFrame1.Name = "LightestPathFrame1";
+            this.LightestPathFrame1.Size = new System.Drawing.Size(1024, 521);
+            this.LightestPathFrame1.TabIndex = 13;
             // 
             // MainWindow
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 16F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(1276, 713);
-            this.Controls.Add(this.shortestPathFrame1);
+            this.Controls.Add(this.LightestPathFrame1);
             this.Controls.Add(this.sudokuFrame1);
             this.Controls.Add(this.homeFrame1);
             this.Controls.Add(this.shutDown);
@@ -395,7 +395,7 @@
         private System.Windows.Forms.Button toShortestPath;
         private Sudoku.SudokuFrame sudokuFrame2;
         private System.Windows.Forms.Panel panel1;
-        private ShortestPath.ShortestPathFrame shortestPathFrame1;
+        private LightestPath.LightestPathFrame LightestPathFrame1;
     }
 }
 
