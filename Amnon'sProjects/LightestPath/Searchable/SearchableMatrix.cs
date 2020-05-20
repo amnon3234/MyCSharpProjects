@@ -62,6 +62,7 @@ namespace Amnon_sProjects.ShortestPath.Searchable
                             this._heuristicValues[curr.Row, curr.Col + 1]
                 });
 
+            /*
             // Check right top
             if (curr.Col != this._colAmount - 1 && curr.Row != 0 &&
                 this._matrix[curr.Row - 1, curr.Col + 1] != int.MaxValue)
@@ -96,7 +97,7 @@ namespace Amnon_sProjects.ShortestPath.Searchable
                     SCost = state.SCost + this._matrix[curr.Row + 1, curr.Col - 1] +
                             this._heuristicValues[curr.Row + 1, curr.Col - 1]
                 });
-
+            */
             return output;
         }
 

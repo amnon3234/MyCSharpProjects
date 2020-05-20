@@ -117,4 +117,16 @@
   <resheader name="writer">
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
+  <data name="discription.Text" xml:space="preserve">
+    <value>Please experiment with my pathfinder program. 
+Instructions: 
+     -Choose an algorithm to run 
+     -(Optional) Set start and end positions
+     -(Optional) Build walls and slowers when
+        - wall is a cube that the algorithm
+                      cannot go through
+       - slower is a cube that cost 20 steps
+                       to go through
+     -(Optional) Set a must go through point</value>
+  </data>
 </root>

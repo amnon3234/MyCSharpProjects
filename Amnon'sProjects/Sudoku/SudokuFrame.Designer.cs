@@ -58,10 +58,10 @@
             // label2
             // 
             this.label2.AutoSize = true;
-            this.label2.Font = new System.Drawing.Font("Century", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.label2.Font = new System.Drawing.Font("Century Gothic", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.label2.Location = new System.Drawing.Point(24, 151);
             this.label2.Name = "label2";
-            this.label2.Size = new System.Drawing.Size(297, 60);
+            this.label2.Size = new System.Drawing.Size(329, 63);
             this.label2.TabIndex = 3;
             this.label2.Text = "Generate a game board and try to solve\r\nit within the time limit. Or insert your\r" +
     "\nown board and we will solve it for you.";

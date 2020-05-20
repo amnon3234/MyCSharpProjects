@@ -147,7 +147,7 @@ namespace Amnon_sProjects.Sudoku
             switch (curr.Name)
             {
                 case "clear":
-                {
+                
                     this.ColorBoard();
                     this._haveSolution = false;
                     this._currBoard = new int[RowAmount, ColAmount];
@@ -162,9 +162,7 @@ namespace Amnon_sProjects.Sudoku
                     }
 
                     break;
-                }
-                case "generate":
-                {
+                case "generate": 
                     switch (this.difficulty.SelectedIndex)
                     {
                         case 0:
@@ -180,9 +178,7 @@ namespace Amnon_sProjects.Sudoku
 
                     this.UpdateBoardButtonsValue();
                     break;
-                }
                 case "solve":
-                {
                     if (!this._haveSolution)
                         #pragma warning disable 4014
                         GraphicalSolverAsync(this._currBoard);
@@ -192,7 +188,6 @@ namespace Amnon_sProjects.Sudoku
                     for (var col = 0; col < ColAmount; col++)
                         this._buttons[row][col].Text = this._currBoard[row, col].ToString();
                     break;
-                }
             }
         }
 

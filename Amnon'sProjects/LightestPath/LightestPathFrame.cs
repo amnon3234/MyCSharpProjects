@@ -1,6 +1,8 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Drawing;
 using System.Linq;
+using System.Threading;
 using System.Windows.Forms;
 using Amnon_sProjects.ShortestPath;
 using Amnon_sProjects.ShortestPath.Searchable;
@@ -10,25 +12,41 @@ namespace Amnon_sProjects.LightestPath
     public partial class LightestPathFrame : UserControl
     {
         // Data
+        private static readonly Color StartingPointColor = Color.FromArgb(178, 8, 55);
+        private static readonly Color EndingPointColor = Color.Firebrick;
+        private static readonly Color MustGoThrewColor = Color.Brown;
+        private static readonly Color SlowerColor = Color.DarkKhaki;
+        private static readonly Color WallColor = Color.FromArgb(40, 37, 40);
+        private static readonly Color EffectColor = Color.LightBlue;
+        private static readonly Color PathFoundColor = Color.SeaGreen;
+        private static readonly Color BackgroundColor = SystemColors.Control;
+        private static readonly Color CubeBorderColor = Color.Black;
+
+        private const int RowAmount = 26;
+        private const int ColAmount = 28;
+        private const int ButtonWidth = 15;
+        private const int ButtonHeight = 15;
+
+        private Point _currStartingPoint;
+        private Point _currEndingPoint;
+        private Point _mustGoThroughPoint;
+
         private int _x, _y;
+
         private bool _isMoving;
-        private Pen _aPen;
-        private const int StartingPointX = 1;
-        private const int StartingPointY = 1;
-        private const int EndingPointX = 38;
-        private const int EndingPointY = 38;
-        private const int RowAmount = 40;
-        private const int ColAmount = 40;
-        private const int ButtonWidth = 10;
-        private const int ButtonHeight = 10;
+        private bool _isMustGoThroughPressed;
+
+        private readonly Size _cubeSize;
+        private Color _currBrushColor;
+        private Button _drawingToolPressed;
         private Graphics _graphics;
 
-        // ShortestPathData
         private readonly int[,] _grid;
 
         // Ctor
         public LightestPathFrame()
         {
+            this._cubeSize = new Size(ButtonWidth, ButtonHeight);
             this._grid = new int[RowAmount,ColAmount];
             this._isMoving = false;
             this._x = -1;
@@ -37,78 +55,263 @@ namespace Amnon_sProjects.LightestPath
         }
         private void ShortestPathFrame_Load(object sender, System.EventArgs e)
         {
-            this._aPen = new Pen(Color.FromArgb(178, 8, 55), 5);
+            this._mustGoThroughPoint = new Point();
+            this._isMustGoThroughPressed = false;
+            this._currStartingPoint = new Point(1 * ButtonWidth, 1 * ButtonHeight);
+            this._currEndingPoint = new Point(26 * ButtonWidth, 24 * ButtonHeight);
+            this._drawingToolPressed = this.buildWall;
             this._graphics = this.girdPanel.CreateGraphics();
-            this._graphics.SmoothingMode = System.Drawing.
-                Drawing2D.SmoothingMode.AntiAlias;
-            this._aPen.StartCap = this._aPen.EndCap = System.Drawing.
-                Drawing2D.LineCap.Square;
+            this._currBrushColor = WallColor;
         }
 
         // --------------------------- Draw Grid --------------------------
-        private void girdPanel_Paint(object sender, PaintEventArgs e)
+        private void GirdPanel_Paint(object sender, PaintEventArgs e)
         {
-            Pen currPen = new Pen(Color.Black, 1);
-            Brush curBrush = new SolidBrush(Color.Firebrick);
+            // Draw grid
             for (int row = 0; row < RowAmount; row++)
                 for (int col = 0; col < ColAmount; col++)
                 {
                     this._grid[row, col] = 1;
                     int x = col * ButtonWidth,
                         y = row * ButtonHeight;
-                    this._graphics.DrawRectangle(currPen, new Rectangle(
-                        new Point(x, y), new Size(ButtonWidth, ButtonHeight)));
+                    Point currPoint = new Point(x, y);
+                    this.DrawRectangle(currPoint, CubeBorderColor, this._cubeSize);
                 }
 
-            const int startX = StartingPointX * ButtonWidth,
-                startY = StartingPointY * ButtonHeight,
-                endX = EndingPointX * ButtonWidth,
-                endY = EndingPointY * ButtonHeight;
+            // Present default starting point
+            this.PaintRectangle(this._currStartingPoint, StartingPointColor, this._cubeSize, true);
 
-            this._graphics.FillRectangle(curBrush, new Rectangle(
-                new Point(startX, startY), new Size(ButtonWidth, ButtonHeight)));
-
-            this._graphics.FillRectangle(curBrush, new Rectangle(
-                new Point(endX, endY), new Size(ButtonWidth, ButtonHeight)));
+            // Present default ending point
+            this.PaintRectangle(this._currEndingPoint, EndingPointColor, this._cubeSize, true);
             
+        }
+
+        //---------------------- Buttons click functions ------------------
+        private void DrawingToolsButtons_click(object sender, EventArgs e)
+        {
+            var curr = sender is Button ? (Button)sender : null;
+            if (curr == null) return;
+            switch (curr.Name)
+            {
+                case "buildWall":
+                    this._currBrushColor = WallColor;
+                    break;
+                case "slower":
+                    this._currBrushColor = SlowerColor;
+                    break;
+                case "mustGoThrough":
+                    this._currBrushColor = MustGoThrewColor;
+                    break;
+                case "setStart":
+                    this._currBrushColor = StartingPointColor;
+                    break;
+                case "setEnd":
+                    this._currBrushColor = EndingPointColor;
+                    break;
+            }
+            this._drawingToolPressed = curr;
+        }
+
+        private void PathFindingButtons_Click(object sender, EventArgs e)
+        {
+            var curr = sender is Button ? (Button) sender : null;
+            if (curr == null) return;
+            switch (curr.Name)
+            {
+                case "clearButton":
+                    // Clear panel
+                    this._graphics.Clear(BackgroundColor);
+                    
+                    // Initialize data  
+                    this._mustGoThroughPoint = new Point();
+                    this._isMustGoThroughPressed = false;
+                    this._currStartingPoint = new Point(1 * ButtonWidth, 1 * ButtonHeight);
+                    this._currEndingPoint = new Point(26 * ButtonWidth, 24 * ButtonHeight);
+                    this._drawingToolPressed = this.buildWall;
+                    this._graphics = this.girdPanel.CreateGraphics();
+                    this._currBrushColor = WallColor;
+
+                    // Draw new grid
+                    this.GirdPanel_Paint(null, null);
+                    break;
+
+                case "runButton":
+
+                    bool funcBool = false;
+                    Func<ISearchable<StatePosition>, bool, bool> func;
+
+                    // Set chosen search method
+                    switch (this.algorithmChooser.SelectedIndex)
+                    {
+                        case 0: // AStar
+                            funcBool = true;
+                            func = GraphicalPathFinder;
+                            break;
+                        case 1:// Dijkstra
+                            func = GraphicalPathFinder;
+                            break;
+                        default:// Best first search
+                            func = GraphicalBestFirstSearch;
+                            break;
+                    }
+                    if (this._isMustGoThroughPressed)
+                    {
+                        bool result1 = false;
+                        Thread t = new Thread(() =>
+                        {
+                            // Find path from starting point to must go trough cube
+                            result1 = RunAlgorithm(func, funcBool, _grid, new Point(
+                                _currStartingPoint.X / ButtonWidth, _currStartingPoint.Y / ButtonHeight),
+                                new Point(_mustGoThroughPoint.X / ButtonWidth, _mustGoThroughPoint.Y / ButtonHeight));
+                            
+                            if (!result1)
+                                MessageBox.Show(
+                                    @"There is no path between the starting position and the must go through cube");
+                        });
+                        t.Start();
+
+                        // find path from must go trough cube to ending point
+                        bool result2 = RunAlgorithm(func, funcBool, _grid, new Point(
+                                _mustGoThroughPoint.X / ButtonWidth, _mustGoThroughPoint.Y / ButtonHeight),
+                            new Point(_currEndingPoint.X / ButtonWidth, _currEndingPoint.Y / ButtonHeight));
+                        
+                        if (!result2)
+                            MessageBox.Show(
+                                @"There is no path between the must go through cube and the ending position");
+                        
+                        // Wait for thread
+                        t.Join();
+                        
+                        if (result1 && result2)
+                            MessageBox.Show(@"Path found and painted in green");
+                    }
+                    else
+                    {
+                        // find path from starting point to ending point
+                        bool result = RunAlgorithm(func, funcBool, _grid, new Point(
+                                _currStartingPoint.X / ButtonWidth, _currStartingPoint.Y / ButtonHeight),
+                            new Point(_currEndingPoint.X / ButtonWidth, _currEndingPoint.Y / ButtonHeight));
+
+                        MessageBox.Show(!result ? 
+                            @"There is no path between the starting position and the ending position":
+                            @"Path found and painted in green");
+                    }
+                    break;
+            }
+        }
+
+        /**
+         * <summary>
+         *          Get one of the path finding methods , a bool , matrix
+         *          ,start point and end point -> create ISearchable problem
+         *          and run the given path finding method on it.
+         * </summary>
+         * <returns>
+         *          path finding method output
+         * </returns>
+         */
+        private static bool RunAlgorithm(Func<ISearchable<StatePosition>, bool, bool> func, bool funcBool, int[,] matrix ,
+            Point start, Point goal)
+        {
+            var startPos = new StatePosition(start.Y,start.X);
+            var endPos = new StatePosition(goal.Y, goal.X);
+            var problem = new SearchableMatrix(matrix, startPos, endPos, RowAmount, ColAmount);
+            return func(problem, funcBool);
         }
 
         // -------------------------- Drawing tools -----------------------
-        private void girdPanel_MouseDown(object sender, MouseEventArgs e)
+        private void GirdPanel_MouseDown(object sender, MouseEventArgs e)
         {
-            this._isMoving = true;
             this._x = (e.X / ButtonWidth) * ButtonWidth;
             this._y = (e.Y / ButtonHeight) * ButtonHeight;
             if (this._x >= ButtonWidth * ColAmount || this._y >= ButtonHeight * RowAmount) return;
-            this._graphics.FillRectangle(new SolidBrush(Color.FromArgb(
-                40, 37, 40)), new Rectangle(new Point(this._x,
-                this._y), new Size(ButtonWidth, ButtonHeight)));
-            this._grid[this._y / ButtonHeight, this._x / ButtonWidth] = int.MaxValue; // Place wall
+
+            Point currPoint = new Point(this._x, this._y);
+            int num = 0;
+
+            switch (this._drawingToolPressed.Name)
+            {
+                case "buildWall":
+                    this._isMoving = true;
+                    num = int.MaxValue;
+                    break;
+                case "slower":
+                    this._isMoving = true;
+                    num = 20;
+                    break;
+                case "mustGoThrough":
+                    this.PaintRectangle(this._mustGoThroughPoint, BackgroundColor, this._cubeSize);
+                    this.DrawRectangle(this._mustGoThroughPoint, CubeBorderColor, this._cubeSize);
+                    this._mustGoThroughPoint = currPoint;
+                    this._isMustGoThroughPressed = true;
+                    break;
+                case "setStart":
+                    this.PaintRectangle(this._currStartingPoint, BackgroundColor, this._cubeSize, true);
+                    this.DrawRectangle(this._currStartingPoint, CubeBorderColor, this._cubeSize);
+                    this._currStartingPoint = currPoint;
+                    break;
+                case "setEnd":
+                    this.PaintRectangle(this._currEndingPoint, BackgroundColor, this._cubeSize, true);
+                    this.DrawRectangle(this._currEndingPoint, CubeBorderColor, this._cubeSize);
+                    this._currEndingPoint = currPoint;
+                    break;
+            }
+
+            this.PaintRectangle(currPoint, this._currBrushColor, this._cubeSize, true);
+            this._grid[this._y / ButtonHeight, this._x / ButtonWidth] = num; 
         }
 
-        private void girdPanel_MouseMove(object sender, MouseEventArgs e)
+        private void GirdPanel_MouseMove(object sender, MouseEventArgs e)
         {
             if (!this._isMoving || this._x == -1 || this._y == -1) return;
             if (this._x >= ButtonWidth * ColAmount || this._y >= ButtonHeight * RowAmount
-            || this._x < 0 || this._y < 0) return;
-            
-            this._graphics.FillRectangle(new SolidBrush(Color.FromArgb(
-                40, 37, 40)), new Rectangle(new Point(this._x,
-                this._y), new Size(ButtonWidth, ButtonHeight)));
+            || this._x < 0 || this._y < 0) return;  // Check constrains 
 
-            this._grid[this._y / ButtonHeight,this._x / ButtonWidth] = int.MaxValue; // Place wall
+            int num = 0;
+            Point currPoint = new Point(this._x, this._y);
+
+            switch (this._drawingToolPressed.Name)
+            {
+                case "buildWall":
+                    num = int.MaxValue;
+                    break;
+                case "slower":
+                    num = 20;
+                    break;
+            }
+
+            this.PaintRectangle(currPoint, this._currBrushColor, this._cubeSize);
+
+            this._grid[this._y / ButtonHeight,this._x / ButtonWidth] = num; 
 
             this._x = (e.X / ButtonWidth) * ButtonWidth;
             this._y = (e.Y / ButtonHeight) * ButtonHeight;
         }
 
-        private void girdPanel_MouseUp(object sender, MouseEventArgs e)
+        private void GirdPanel_MouseUp(object sender, MouseEventArgs e)
         {
             this._isMoving = false;
             this._x = -1;
             this._y = -1;
         }
 
+        private void PaintRectangle(Point point, Color color, Size size, bool toOverride = false)
+        {
+            if ( !toOverride && (this._currStartingPoint.Equals(point) || this._currEndingPoint.Equals(point)))
+                return;
+
+            SolidBrush currBrush = new SolidBrush(color);
+            Rectangle currRectangle = new Rectangle(point, size);
+            lock(this)
+                this._graphics.FillRectangle(currBrush, currRectangle);
+        }
+
+        private void DrawRectangle(Point point, Color color, Size size)
+        {
+            Pen currPen = new Pen(color, 1);
+            Rectangle currRectangle = new Rectangle(point, size);
+            this._graphics.DrawRectangle(currPen, currRectangle);
+        }
 
         // -------------------------- Path finder algorithm -----------------------
         /**
@@ -120,10 +323,11 @@ namespace Amnon_sProjects.LightestPath
          *          There is a path between the two dots ? true : false
          * </returns>
          */
-        private bool GraphicalPathFinder(ISearchable<StatePosition> searchable , bool isAStar)
+        private bool GraphicalPathFinder(ISearchable<StatePosition> searchable , bool isAStar=false)
         {
             var source = searchable.GetInitialState();
             var minHeap = new Heap<State<StatePosition>>(true);
+            var visited = new HashSet<State<StatePosition>>();
 
             // If AStar Apply hFunction 
             if (isAStar)
@@ -131,11 +335,11 @@ namespace Amnon_sProjects.LightestPath
 
             // Initialize source
             minHeap.Insert(source);
-
+            visited.Add(source);
             while (!minHeap.IsEmpty)
             {
                 var curr = minHeap.Remove();
-               
+                visited.Add(curr);
                 // If the algorithm found the goal state
                 if (searchable.IsGoalState(curr))
                 {
@@ -145,12 +349,12 @@ namespace Amnon_sProjects.LightestPath
 
                 // Color if current state != source
                 if (!curr.Equals(source))
-                    this._graphics.FillRectangle(new SolidBrush(Color.LightBlue), new Rectangle(new Point(
-                        curr.SValue.Col * ButtonWidth, curr.SValue.Row * ButtonHeight),
-                        new Size(ButtonWidth, ButtonHeight)));
+                    this.PaintRectangle(new Point(curr.SValue.Col * ButtonWidth, curr.SValue.Row * ButtonHeight),
+                        EffectColor, this._cubeSize);
 
                 // For each state neighbor
-                foreach (var neigh in searchable.GetAllPossibleStates(curr))
+                foreach (var neigh in searchable.GetAllPossibleStates(curr).Where(neigh => 
+                    !visited.Contains(neigh)))
                 {
                     neigh.Father = curr;
                     if(!minHeap.Contains(neigh))
@@ -177,7 +381,7 @@ namespace Amnon_sProjects.LightestPath
          *          There is a path between the two dots ? true : false
          * </returns>
          */
-        private bool GraphicalBestFirstSearch(ISearchable<StatePosition> searchable)
+        private bool GraphicalBestFirstSearch(ISearchable<StatePosition> searchable, bool nothing = false)
         {
             var source = searchable.GetInitialState();
             var minHeap = new Heap<State<StatePosition>>(true); 
@@ -201,9 +405,8 @@ namespace Amnon_sProjects.LightestPath
 
                 // Color if current state != source
                 if (!curr.Equals(source))
-                    this._graphics.FillRectangle(new SolidBrush(Color.LightBlue), new Rectangle(new Point(
-                            curr.SValue.Col * ButtonWidth, curr.SValue.Row * ButtonHeight),
-                        new Size(ButtonWidth, ButtonHeight)));
+                    this.PaintRectangle(new Point(curr.SValue.Col * ButtonWidth, curr.SValue.Row * ButtonHeight),
+                        EffectColor, this._cubeSize);
 
                 // For each state neighbor
                 foreach (var neigh in searchable.GetAllPossibleStates(curr))
@@ -226,9 +429,7 @@ namespace Amnon_sProjects.LightestPath
             // There is no path 
             return false;
         }
-
-
-
+        
         // -------------------------- Help Functions ---------------------------
         /**
          * <summary>
@@ -244,11 +445,10 @@ namespace Amnon_sProjects.LightestPath
             {
                 // Until we reach start state
                 if (state.Father == null) return;
-                
+
                 // Color each state
-                this._graphics.FillRectangle(new SolidBrush(Color.LawnGreen),
-                    new Rectangle(new Point(state.SValue.Col * ButtonWidth,
-                        state.SValue.Row * ButtonHeight), new Size(ButtonWidth, ButtonHeight)));
+                this.PaintRectangle(new Point(state.SValue.Col * ButtonWidth,state.SValue.Row * ButtonHeight),
+                    PathFoundColor, this._cubeSize);
 
                 // Continuing to the next node in the path
                 state = state.Father;
