@@ -96,9 +96,11 @@
     <Compile Include="Properties\Resources.Designer.cs">
       <AutoGen>True</AutoGen>
       <DependentUpon>Resources.resx</DependentUpon>
+      <DesignTime>True</DesignTime>
     </Compile>
     <EmbeddedResource Include="Sudoku\SudokuFrame.resx">
       <DependentUpon>SudokuFrame.cs</DependentUpon>
+      <SubType>Designer</SubType>
     </EmbeddedResource>
     <None Include="..\.editorconfig">
       <Link>.editorconfig</Link>
@@ -116,6 +118,32 @@
   <ItemGroup>
     <None Include="App.config" />
   </ItemGroup>
-  <ItemGroup />
+  <ItemGroup>
+    <None Include="Resources\end.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\mustGoThrough.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\path.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\slower.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\start.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\wall.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\snail_32.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\wall.ico" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\wall_32.png" />
+  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

@@ -2,9 +2,6 @@
 
 namespace Amnon_sProjects.Sudoku
 {
-    /*
-     * Solve by using backTrace algorithm
-     */
     internal class SudokuSolver
     {
         //Data
@@ -24,6 +21,11 @@ namespace Amnon_sProjects.Sudoku
         }
 
         //----------------------------------------- Solve -----------------------------------------------
+        /**
+         * <summary>
+         *     Sudoku solver algorithm by using backTrace algorithm
+         * </summary>
+         */
         public static bool Solve(int[,] aBoard)
         {
             var firstEmpty = FindFirstEmpty(aBoard); 
@@ -44,6 +46,11 @@ namespace Amnon_sProjects.Sudoku
         }
 
         //---------------------------------- Find first empty cube --------------------------------------
+        /**
+         * <summary>
+         *      Finding the first empty (0) place in the board or null if the board is full
+         * </summary>
+         */
         public static Cube FindFirstEmpty(int [,] aBoard)
         {
             for (int row = 0; row < RowAmount; row++)
@@ -54,6 +61,16 @@ namespace Amnon_sProjects.Sudoku
         }
 
         //--------------------------- Check if current cube value is valid ------------------------------
+        /**
+         * <summary>
+         *      Gets a value and a place in the board and checks if the specific value
+         *      are allowed ( Sudoku rules : a value cannot be repeated in the same cube
+         *      the same row and the same column)
+         * </summary>
+         * <returns>
+         *      List of positions with the same value 
+         * </returns>
+         */
         public static List<Cube> IsValid(int [,] aBoard, int value, Cube cubePos)
         {
             var problematicCubes = new List<Cube>();
@@ -79,6 +96,16 @@ namespace Amnon_sProjects.Sudoku
             return problematicCubes;
         }
 
+        /**
+         * <summary>
+         *      Gets a value and a place in the board and checks if the specific value
+         *      are allowed ( Sudoku rules : a value cannot be repeated in the same cube
+         *      the same row and the same column)
+         * </summary>
+         * <returns>
+         *      True if allowed else false 
+         * </returns>
+         */
         public static bool IsValid2(int[,] aBoard, int value, Cube cubePos)
         {
             // Check row

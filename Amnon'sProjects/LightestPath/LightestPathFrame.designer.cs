@@ -50,10 +50,10 @@
             this.girdPanel.Controls.Add(this.mustGoThrough);
             this.girdPanel.Controls.Add(this.slower);
             this.girdPanel.Controls.Add(this.buildWall);
-            this.girdPanel.Location = new System.Drawing.Point(329, 2);
-            this.girdPanel.Margin = new System.Windows.Forms.Padding(2);
+            this.girdPanel.Location = new System.Drawing.Point(439, 2);
+            this.girdPanel.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
             this.girdPanel.Name = "girdPanel";
-            this.girdPanel.Size = new System.Drawing.Size(430, 431);
+            this.girdPanel.Size = new System.Drawing.Size(573, 530);
             this.girdPanel.TabIndex = 0;
             this.girdPanel.Paint += new System.Windows.Forms.PaintEventHandler(this.GirdPanel_Paint);
             this.girdPanel.MouseDown += new System.Windows.Forms.MouseEventHandler(this.GirdPanel_MouseDown);
@@ -67,9 +67,10 @@
             this.setEnd.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.setEnd.Font = new System.Drawing.Font("Century Gothic", 8.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.setEnd.ForeColor = System.Drawing.Color.White;
-            this.setEnd.Location = new System.Drawing.Point(345, 396);
+            this.setEnd.Location = new System.Drawing.Point(460, 487);
+            this.setEnd.Margin = new System.Windows.Forms.Padding(4);
             this.setEnd.Name = "setEnd";
-            this.setEnd.Size = new System.Drawing.Size(75, 23);
+            this.setEnd.Size = new System.Drawing.Size(100, 28);
             this.setEnd.TabIndex = 3;
             this.setEnd.Text = "Set End";
             this.setEnd.UseVisualStyleBackColor = false;
@@ -82,9 +83,10 @@
             this.setStart.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.setStart.Font = new System.Drawing.Font("Century Gothic", 8.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.setStart.ForeColor = System.Drawing.Color.White;
-            this.setStart.Location = new System.Drawing.Point(261, 396);
+            this.setStart.Location = new System.Drawing.Point(348, 487);
+            this.setStart.Margin = new System.Windows.Forms.Padding(4);
             this.setStart.Name = "setStart";
-            this.setStart.Size = new System.Drawing.Size(75, 23);
+            this.setStart.Size = new System.Drawing.Size(100, 28);
             this.setStart.TabIndex = 3;
             this.setStart.Text = "Set Start";
             this.setStart.UseVisualStyleBackColor = false;
@@ -97,9 +99,10 @@
             this.mustGoThrough.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.mustGoThrough.Font = new System.Drawing.Font("Century Gothic", 8.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.mustGoThrough.ForeColor = System.Drawing.Color.White;
-            this.mustGoThrough.Location = new System.Drawing.Point(173, 396);
+            this.mustGoThrough.Location = new System.Drawing.Point(231, 487);
+            this.mustGoThrough.Margin = new System.Windows.Forms.Padding(4);
             this.mustGoThrough.Name = "mustGoThrough";
-            this.mustGoThrough.Size = new System.Drawing.Size(79, 23);
+            this.mustGoThrough.Size = new System.Drawing.Size(105, 28);
             this.mustGoThrough.TabIndex = 3;
             this.mustGoThrough.Text = "Go through";
             this.mustGoThrough.UseVisualStyleBackColor = false;
@@ -112,9 +115,10 @@
             this.slower.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.slower.Font = new System.Drawing.Font("Century Gothic", 8.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.slower.ForeColor = System.Drawing.SystemColors.ActiveCaptionText;
-            this.slower.Location = new System.Drawing.Point(89, 396);
+            this.slower.Location = new System.Drawing.Point(119, 487);
+            this.slower.Margin = new System.Windows.Forms.Padding(4);
             this.slower.Name = "slower";
-            this.slower.Size = new System.Drawing.Size(75, 23);
+            this.slower.Size = new System.Drawing.Size(100, 28);
             this.slower.TabIndex = 3;
             this.slower.Text = "Slower";
             this.slower.UseVisualStyleBackColor = false;
@@ -127,9 +131,10 @@
             this.buildWall.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.buildWall.Font = new System.Drawing.Font("Century Gothic", 8.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.buildWall.ForeColor = System.Drawing.Color.White;
-            this.buildWall.Location = new System.Drawing.Point(5, 396);
+            this.buildWall.Location = new System.Drawing.Point(7, 487);
+            this.buildWall.Margin = new System.Windows.Forms.Padding(4);
             this.buildWall.Name = "buildWall";
-            this.buildWall.Size = new System.Drawing.Size(75, 23);
+            this.buildWall.Size = new System.Drawing.Size(100, 28);
             this.buildWall.TabIndex = 3;
             this.buildWall.Text = "Wall";
             this.buildWall.UseVisualStyleBackColor = false;
@@ -139,10 +144,9 @@
             // 
             this.header.AutoSize = true;
             this.header.Font = new System.Drawing.Font("Elephant", 19.8F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.header.Location = new System.Drawing.Point(0, 23);
-            this.header.Margin = new System.Windows.Forms.Padding(2, 0, 2, 0);
+            this.header.Location = new System.Drawing.Point(0, 28);
             this.header.Name = "header";
-            this.header.Size = new System.Drawing.Size(302, 35);
+            this.header.Size = new System.Drawing.Size(363, 42);
             this.header.TabIndex = 1;
             this.header.Text = "Lightest Path Finder";
             // 
@@ -150,10 +154,9 @@
             // 
             this.discription.AutoSize = true;
             this.discription.Font = new System.Drawing.Font("Century Gothic", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.discription.Location = new System.Drawing.Point(2, 68);
-            this.discription.Margin = new System.Windows.Forms.Padding(2, 0, 2, 0);
+            this.discription.Location = new System.Drawing.Point(3, 84);
             this.discription.Name = "discription";
-            this.discription.Size = new System.Drawing.Size(320, 170);
+            this.discription.Size = new System.Drawing.Size(407, 210);
             this.discription.TabIndex = 2;
             this.discription.Text = resources.GetString("discription.Text");
             // 
@@ -164,9 +167,10 @@
             "AStar",
             "Dijkstra",
             "BestFirstSearch"});
-            this.algorithmChooser.Location = new System.Drawing.Point(176, 297);
+            this.algorithmChooser.Location = new System.Drawing.Point(235, 366);
+            this.algorithmChooser.Margin = new System.Windows.Forms.Padding(4);
             this.algorithmChooser.Name = "algorithmChooser";
-            this.algorithmChooser.Size = new System.Drawing.Size(148, 21);
+            this.algorithmChooser.Size = new System.Drawing.Size(196, 24);
             this.algorithmChooser.TabIndex = 6;
             // 
             // clearButton
@@ -175,9 +179,10 @@
             this.clearButton.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.clearButton.Font = new System.Drawing.Font("Century Gothic", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.clearButton.ForeColor = System.Drawing.Color.White;
-            this.clearButton.Location = new System.Drawing.Point(176, 324);
+            this.clearButton.Location = new System.Drawing.Point(235, 399);
+            this.clearButton.Margin = new System.Windows.Forms.Padding(4);
             this.clearButton.Name = "clearButton";
-            this.clearButton.Size = new System.Drawing.Size(148, 32);
+            this.clearButton.Size = new System.Drawing.Size(197, 39);
             this.clearButton.TabIndex = 7;
             this.clearButton.Text = "Clear Grid";
             this.clearButton.UseVisualStyleBackColor = false;
@@ -189,9 +194,10 @@
             this.runButton.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.runButton.Font = new System.Drawing.Font("Century Gothic", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.runButton.ForeColor = System.Drawing.Color.White;
-            this.runButton.Location = new System.Drawing.Point(176, 362);
+            this.runButton.Location = new System.Drawing.Point(235, 446);
+            this.runButton.Margin = new System.Windows.Forms.Padding(4);
             this.runButton.Name = "runButton";
-            this.runButton.Size = new System.Drawing.Size(148, 32);
+            this.runButton.Size = new System.Drawing.Size(197, 39);
             this.runButton.TabIndex = 7;
             this.runButton.Text = "Run";
             this.runButton.UseVisualStyleBackColor = false;
@@ -199,7 +205,7 @@
             // 
             // LightestPathFrame
             // 
-            this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
+            this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 16F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.Controls.Add(this.runButton);
             this.Controls.Add(this.clearButton);
@@ -207,9 +213,9 @@
             this.Controls.Add(this.discription);
             this.Controls.Add(this.header);
             this.Controls.Add(this.girdPanel);
-            this.Margin = new System.Windows.Forms.Padding(2);
+            this.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
             this.Name = "LightestPathFrame";
-            this.Size = new System.Drawing.Size(768, 423);
+            this.Size = new System.Drawing.Size(1024, 521);
             this.Load += new System.EventHandler(this.ShortestPathFrame_Load);
             this.girdPanel.ResumeLayout(false);
             this.ResumeLayout(false);

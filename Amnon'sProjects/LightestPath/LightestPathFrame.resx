@@ -122,10 +122,10 @@
 Instructions: 
      -Choose an algorithm to run 
      -(Optional) Set start and end positions
-     -(Optional) Build walls and slowers when
+     -(Optional) Build walls and slowers while
         - wall is a cube that the algorithm
                       cannot go through
-       - slower is a cube that cost 20 steps
+       - slower is a cube that costs 20 steps
                        to go through
      -(Optional) Set a must go through point</value>
   </data>

@@ -23,6 +23,12 @@ namespace Amnon_sProjects.Sudoku
         }
 
         // -------------------------------------- Generate a board ----------------------------------
+        /**
+         * <summary>
+         *      Generate sudoku board by solving the empty board with the backtrace algorithm
+         *      and randomize the way the algorithm chooses its values
+         * </summary>
+         */
         private bool Generate()
         {
             SudokuSolver.Cube aCube = SudokuSolver.FindFirstEmpty(this._board);
@@ -47,8 +53,13 @@ namespace Amnon_sProjects.Sudoku
             return this._board;
         }
 
-        // ------------------------- Shuffle a list using  Fisher-Yates shuffle: -------------------
-       
+        // -----------------------------------------  Shuffle  -------------------------------------
+
+        /**
+         * <summary>
+         *      Shuffle a list using  Fisher-Yates shuffle:
+         * </summary>
+         */
         public static void Shuffle(IList<int> list)
         {
             int listSize = list.Count;

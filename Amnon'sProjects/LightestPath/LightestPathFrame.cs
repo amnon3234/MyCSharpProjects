@@ -2,8 +2,10 @@
 using System.Collections.Generic;
 using System.Drawing;
 using System.Linq;
+using System.Runtime.CompilerServices;
 using System.Threading;
 using System.Windows.Forms;
+using Amnon_sProjects.Properties;
 using Amnon_sProjects.ShortestPath;
 using Amnon_sProjects.ShortestPath.Searchable;
 
@@ -22,6 +24,15 @@ namespace Amnon_sProjects.LightestPath
         private static readonly Color BackgroundColor = SystemColors.Control;
         private static readonly Color CubeBorderColor = Color.Black;
 
+        private static readonly Image StartingPointImage = Resources.start;
+        private static readonly Image EndingPointImage = Resources.end;
+        private static readonly Image MustGoThroughImage = Resources.mustGoThrough;
+        private static readonly Image WallImage = Resources.wall;
+        private static readonly Image SlowerImage = Resources.slower;
+        private static readonly Image PathImage = Resources.path;
+
+        private static readonly object Locker = new object();
+
         private const int RowAmount = 26;
         private const int ColAmount = 28;
         private const int ButtonWidth = 15;
@@ -38,6 +49,7 @@ namespace Amnon_sProjects.LightestPath
 
         private readonly Size _cubeSize;
         private Color _currBrushColor;
+        private Image _currImage;
         private Button _drawingToolPressed;
         private Graphics _graphics;
 
@@ -62,6 +74,7 @@ namespace Amnon_sProjects.LightestPath
             this._drawingToolPressed = this.buildWall;
             this._graphics = this.girdPanel.CreateGraphics();
             this._currBrushColor = WallColor;
+            this._currImage = WallImage;
         }
 
         // --------------------------- Draw Grid --------------------------
@@ -79,11 +92,13 @@ namespace Amnon_sProjects.LightestPath
                 }
 
             // Present default starting point
-            this.PaintRectangle(this._currStartingPoint, StartingPointColor, this._cubeSize, true);
+            //this.PaintRectangle(this._currStartingPoint, StartingPointColor, this._cubeSize, true);
+            this.DrawImage(this._currStartingPoint, this._cubeSize, StartingPointImage);
 
             // Present default ending point
-            this.PaintRectangle(this._currEndingPoint, EndingPointColor, this._cubeSize, true);
-            
+            //this.PaintRectangle(this._currEndingPoint, EndingPointColor, this._cubeSize, true);
+            this.DrawImage(this._currEndingPoint, this._cubeSize, EndingPointImage);
+
         }
 
         //---------------------- Buttons click functions ------------------
@@ -95,18 +110,23 @@ namespace Amnon_sProjects.LightestPath
             {
                 case "buildWall":
                     this._currBrushColor = WallColor;
+                    this._currImage = WallImage;
                     break;
                 case "slower":
                     this._currBrushColor = SlowerColor;
+                    this._currImage = SlowerImage;
                     break;
                 case "mustGoThrough":
                     this._currBrushColor = MustGoThrewColor;
+                    this._currImage = MustGoThroughImage;
                     break;
                 case "setStart":
                     this._currBrushColor = StartingPointColor;
+                    this._currImage = StartingPointImage;
                     break;
                 case "setEnd":
                     this._currBrushColor = EndingPointColor;
+                    this._currImage = EndingPointImage;
                     break;
             }
             this._drawingToolPressed = curr;
@@ -157,19 +177,23 @@ namespace Amnon_sProjects.LightestPath
                     if (this._isMustGoThroughPressed)
                     {
                         bool result1 = false;
-                        Thread t = new Thread(() =>
+                        Thread t;
+                        try
                         {
-                            // Find path from starting point to must go trough cube
-                            result1 = RunAlgorithm(func, funcBool, _grid, new Point(
-                                _currStartingPoint.X / ButtonWidth, _currStartingPoint.Y / ButtonHeight),
-                                new Point(_mustGoThroughPoint.X / ButtonWidth, _mustGoThroughPoint.Y / ButtonHeight));
-                            
-                            if (!result1)
-                                MessageBox.Show(
-                                    @"There is no path between the starting position and the must go through cube");
-                        });
-                        t.Start();
+                            t = new Thread(() =>
+                            {
+                                // Find path from starting point to must go trough cube
+                                result1 = RunAlgorithm(func, funcBool, _grid, new Point(
+                                        _currStartingPoint.X / ButtonWidth, _currStartingPoint.Y / ButtonHeight),
+                                    new Point(_mustGoThroughPoint.X / ButtonWidth, _mustGoThroughPoint.Y / ButtonHeight));
 
+                                if (!result1)
+                                    MessageBox.Show(
+                                        @"There is no path between the starting position and the must go through cube");
+                            });
+                            t.Start();
+                        }
+                        catch(Exception) { return; }
                         // find path from must go trough cube to ending point
                         bool result2 = RunAlgorithm(func, funcBool, _grid, new Point(
                                 _mustGoThroughPoint.X / ButtonWidth, _mustGoThroughPoint.Y / ButtonHeight),
@@ -257,8 +281,9 @@ namespace Amnon_sProjects.LightestPath
                     break;
             }
 
-            this.PaintRectangle(currPoint, this._currBrushColor, this._cubeSize, true);
-            this._grid[this._y / ButtonHeight, this._x / ButtonWidth] = num; 
+            //this.PaintRectangle(currPoint, this._currBrushColor, this._cubeSize, true);
+            this.DrawImage(currPoint, this._cubeSize, this._currImage);
+            this._grid[this._y / ButtonHeight, this._x / ButtonWidth] = num;
         }
 
         private void GirdPanel_MouseMove(object sender, MouseEventArgs e)
@@ -280,7 +305,8 @@ namespace Amnon_sProjects.LightestPath
                     break;
             }
 
-            this.PaintRectangle(currPoint, this._currBrushColor, this._cubeSize);
+            //this.PaintRectangle(currPoint, this._currBrushColor, this._cubeSize);
+            this.DrawImage(currPoint, this._cubeSize, this._currImage);
 
             this._grid[this._y / ButtonHeight,this._x / ButtonWidth] = num; 
 
@@ -302,8 +328,10 @@ namespace Amnon_sProjects.LightestPath
 
             SolidBrush currBrush = new SolidBrush(color);
             Rectangle currRectangle = new Rectangle(point, size);
-            lock(this)
+            lock (Locker)
+            {
                 this._graphics.FillRectangle(currBrush, currRectangle);
+            }
         }
 
         private void DrawRectangle(Point point, Color color, Size size)
@@ -311,6 +339,15 @@ namespace Amnon_sProjects.LightestPath
             Pen currPen = new Pen(color, 1);
             Rectangle currRectangle = new Rectangle(point, size);
             this._graphics.DrawRectangle(currPen, currRectangle);
+        }
+
+        private void DrawImage(Point point, Size size, Image image)
+        {
+            Rectangle rectangle = new Rectangle(point, size);
+            lock (Locker)
+            {
+                this._graphics.DrawImage(image, rectangle);
+            }
         }
 
         // -------------------------- Path finder algorithm -----------------------
@@ -440,6 +477,7 @@ namespace Amnon_sProjects.LightestPath
          */
         private void GraphicalTraceTrack(State<StatePosition> state)
         {
+            Thread.Sleep(100);
             state = state.Father; 
             while (true)
             {
@@ -449,6 +487,8 @@ namespace Amnon_sProjects.LightestPath
                 // Color each state
                 this.PaintRectangle(new Point(state.SValue.Col * ButtonWidth,state.SValue.Row * ButtonHeight),
                     PathFoundColor, this._cubeSize);
+                this.DrawImage(new Point(state.SValue.Col * ButtonWidth, state.SValue.Row * ButtonHeight),
+                    this._cubeSize, PathImage);
 
                 // Continuing to the next node in the path
                 state = state.Father;

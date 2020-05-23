@@ -77,12 +77,22 @@ namespace Amnon_sProjects.ShortestPath
         }
         // -------------------------- Heap Functions ---------------------------
 
+        /**
+         * <summary>
+         *          Peeking the heap root value ( first value in the array)
+         * </summary>
+         */
         public T Peek()
         { 
             if(this.IsEmpty) throw new ArgumentOutOfRangeException($"The heap is empty");
-            return this._heap[0]; // Peek heap root value
+            return this._heap[0];
         }
 
+        /**
+         * <summary>
+         *          Removing and returning the heap root value ( first value in the array)
+         * </summary>
+         */
         public T Remove()
         {
             if (this.IsEmpty) throw new ArgumentOutOfRangeException($"The heap is empty");
@@ -94,6 +104,11 @@ namespace Amnon_sProjects.ShortestPath
             return returnValue; // Remove heap root and return it's value
         }
 
+        /**
+         * <summary>
+         *          Removing a specific element from the heap 
+         * </summary>
+         */
         public bool Remove(T elementToRemove)
         {
             if (!this._heap.Contains(elementToRemove)) return false;
@@ -103,7 +118,11 @@ namespace Amnon_sProjects.ShortestPath
             return output;
         }
 
-
+        /**
+         * <summary>
+         *          Inserting an element to the heap
+         * </summary>
+         */
         public void Insert(T element)
         {
             this._heap.Add(element);

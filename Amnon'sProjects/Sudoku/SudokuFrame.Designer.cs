@@ -39,9 +39,10 @@
             // 
             // panel1
             // 
-            this.panel1.Location = new System.Drawing.Point(400, 68);
+            this.panel1.Location = new System.Drawing.Point(533, 84);
+            this.panel1.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
             this.panel1.Name = "panel1";
-            this.panel1.Size = new System.Drawing.Size(437, 368);
+            this.panel1.Size = new System.Drawing.Size(583, 453);
             this.panel1.TabIndex = 1;
             // 
             // label1
@@ -49,9 +50,10 @@
             this.label1.AutoSize = true;
             this.label1.Font = new System.Drawing.Font("Elephant", 36F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.label1.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(40)))), ((int)(((byte)(37)))), ((int)(((byte)(40)))));
-            this.label1.Location = new System.Drawing.Point(17, 68);
+            this.label1.Location = new System.Drawing.Point(23, 84);
+            this.label1.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
             this.label1.Name = "label1";
-            this.label1.Size = new System.Drawing.Size(329, 62);
+            this.label1.Size = new System.Drawing.Size(411, 77);
             this.label1.TabIndex = 2;
             this.label1.Text = "Play Sudoku";
             // 
@@ -59,9 +61,10 @@
             // 
             this.label2.AutoSize = true;
             this.label2.Font = new System.Drawing.Font("Century Gothic", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label2.Location = new System.Drawing.Point(24, 151);
+            this.label2.Location = new System.Drawing.Point(32, 186);
+            this.label2.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
             this.label2.Name = "label2";
-            this.label2.Size = new System.Drawing.Size(329, 63);
+            this.label2.Size = new System.Drawing.Size(417, 69);
             this.label2.TabIndex = 3;
             this.label2.Text = "Generate a game board and try to solve\r\nit within the time limit. Or insert your\r" +
     "\nown board and we will solve it for you.";
@@ -72,9 +75,10 @@
             this.solve.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.solve.Font = new System.Drawing.Font("Century Gothic", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.solve.ForeColor = System.Drawing.Color.White;
-            this.solve.Location = new System.Drawing.Point(246, 383);
+            this.solve.Location = new System.Drawing.Point(328, 471);
+            this.solve.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
             this.solve.Name = "solve";
-            this.solve.Size = new System.Drawing.Size(148, 32);
+            this.solve.Size = new System.Drawing.Size(197, 39);
             this.solve.TabIndex = 4;
             this.solve.Text = "Solve";
             this.solve.UseVisualStyleBackColor = false;
@@ -86,9 +90,10 @@
             this.generate.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.generate.Font = new System.Drawing.Font("Century Gothic", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.generate.ForeColor = System.Drawing.Color.White;
-            this.generate.Location = new System.Drawing.Point(246, 345);
+            this.generate.Location = new System.Drawing.Point(328, 425);
+            this.generate.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
             this.generate.Name = "generate";
-            this.generate.Size = new System.Drawing.Size(148, 32);
+            this.generate.Size = new System.Drawing.Size(197, 39);
             this.generate.TabIndex = 4;
             this.generate.Text = "Generate Board";
             this.generate.UseVisualStyleBackColor = false;
@@ -100,9 +105,10 @@
             this.clear.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.clear.Font = new System.Drawing.Font("Century Gothic", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.clear.ForeColor = System.Drawing.Color.White;
-            this.clear.Location = new System.Drawing.Point(246, 307);
+            this.clear.Location = new System.Drawing.Point(328, 378);
+            this.clear.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
             this.clear.Name = "clear";
-            this.clear.Size = new System.Drawing.Size(148, 32);
+            this.clear.Size = new System.Drawing.Size(197, 39);
             this.clear.TabIndex = 4;
             this.clear.Text = "Clear Board";
             this.clear.UseVisualStyleBackColor = false;
@@ -115,14 +121,15 @@
             "Hard",
             "Advanced",
             "Easy"});
-            this.difficulty.Location = new System.Drawing.Point(246, 280);
+            this.difficulty.Location = new System.Drawing.Point(328, 345);
+            this.difficulty.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
             this.difficulty.Name = "difficulty";
-            this.difficulty.Size = new System.Drawing.Size(148, 21);
+            this.difficulty.Size = new System.Drawing.Size(196, 24);
             this.difficulty.TabIndex = 5;
             // 
             // SudokuFrame
             // 
-            this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
+            this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 16F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.Controls.Add(this.difficulty);
             this.Controls.Add(this.clear);
@@ -131,8 +138,9 @@
             this.Controls.Add(this.label2);
             this.Controls.Add(this.label1);
             this.Controls.Add(this.panel1);
+            this.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
             this.Name = "SudokuFrame";
-            this.Size = new System.Drawing.Size(840, 439);
+            this.Size = new System.Drawing.Size(1120, 540);
             this.Load += new System.EventHandler(this.SudokuFrame_Load);
             this.ResumeLayout(false);
             this.PerformLayout();

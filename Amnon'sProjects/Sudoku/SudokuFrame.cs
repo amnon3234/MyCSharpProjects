@@ -9,18 +9,28 @@ namespace Amnon_sProjects.Sudoku
     public partial class SudokuFrame : UserControl
     {
         // Data
+        private static readonly Color FirstColor = Color.LightCoral;
+        private static readonly Color SecondColor = Color.LightSlateGray;
+        private static readonly Color ButtonForeColor = Color.Black;
+        private static readonly Color ProblemColor = Color.Red;
+        private static readonly Color FinishColor = Color.Green;
+
         private const int ButtonWidth = 34;
         private const int ButtonHeight = 34;
         private const int SpaceBetweenButtons = 5;
         private const int RowAmount = 9;
         private const int ColAmount = 9;
+        private const int Easy = 40, Advanced = 54, Hard= 62;
+
         private readonly List<List<CubeButton>> _buttons;
+        private CubeButton _pressed;
+
         private int _numOfZeroes;
+        private int _problemNumber;
+        private int[,] _currBoardWithZeroes;
         private int[,] _currBoard;
         private bool _haveSolution;
-        private CubeButton _pressed;
-        private int[,] _currBoardWithZeroes;
-        private int _problemNumber;
+
 
         private class CubeButton : Button
         {
@@ -62,8 +72,7 @@ namespace Amnon_sProjects.Sudoku
                     this.CustomizeCube(cube, row, col);
 
                     if (col % 3 == 0 && col != 0) colorFlag = !colorFlag;
-                    cube.BackColor = colorFlag ?
-                        Color.FromArgb(178, 8, 55) : Color.FromArgb(40, 37, 40);
+                    cube.BackColor = colorFlag ? FirstColor : SecondColor;
                     newRow.Add(cube);
                     this.panel1.Controls.Add(cube);
                 }
@@ -80,8 +89,7 @@ namespace Amnon_sProjects.Sudoku
                 {
                     var cube = this._buttons[row][col];
                     if (col % 3 == 0 && col != 0) colorFlag = !colorFlag;
-                    cube.BackColor = colorFlag ?
-                        Color.FromArgb(178, 8, 55) : Color.FromArgb(40, 37, 40);
+                    cube.BackColor = colorFlag ? FirstColor : SecondColor;
                 }
             }
         }
@@ -95,7 +103,7 @@ namespace Amnon_sProjects.Sudoku
             cube.Tag = row + ";" + col;
             cube.Click += this.gameBoardButton_Click;
             cube.KeyPress += SudokuFrame_KeyPress;
-            cube.ForeColor = Color.White;
+            cube.ForeColor = ButtonForeColor;
             cube.Top = row * (ButtonHeight + SpaceBetweenButtons);
             cube.Left = col * (ButtonWidth + SpaceBetweenButtons);
             cube.Row = row;
@@ -166,13 +174,13 @@ namespace Amnon_sProjects.Sudoku
                     switch (this.difficulty.SelectedIndex)
                     {
                         case 0:
-                            this._numOfZeroes = 62;
+                            this._numOfZeroes = Hard;
                             break;
                         case 1:
-                            this._numOfZeroes = 54;
+                            this._numOfZeroes = Advanced;
                             break;
                         default:
-                            this._numOfZeroes = 40;
+                            this._numOfZeroes = Easy;
                             break;
                     }
 
@@ -216,14 +224,14 @@ namespace Amnon_sProjects.Sudoku
             {
                 this._problemNumber++;
                 this._buttons[cube.CubeRow][cube.CubeCol].FlatAppearance.BorderSize = 3;
-                this._buttons[cube.CubeRow][cube.CubeCol].FlatAppearance.BorderColor = Color.Red;
+                this._buttons[cube.CubeRow][cube.CubeCol].FlatAppearance.BorderColor = ProblemColor;
             }
 
             if (this._problemNumber == 0 && SudokuSolver.FindFirstEmpty(this._currBoardWithZeroes) == null)
             {
                 for (var r = 0; r < RowAmount; r++)
                     for (var c = 0; c < ColAmount; c++)
-                        this._buttons[r][c].BackColor = Color.Green;
+                        this._buttons[r][c].BackColor = FinishColor;
                 MessageBox.Show(@"Congrats.... you completed the sudoku");
             }
 
@@ -231,7 +239,11 @@ namespace Amnon_sProjects.Sudoku
         }
 
         // ------------------------------- Sudoku Graphical Solver ----------------------------------   
-
+        /**
+         * <summary>
+         *      Graphical sudoku solver algorithm by using backTrace algorithm
+         * </summary>
+         */
         private async Task<bool> GraphicalSolverAsync(int[,] aBoard)
         {
             var firstEmpty = SudokuSolver.FindFirstEmpty(aBoard);
@@ -241,7 +253,7 @@ namespace Amnon_sProjects.Sudoku
             int row = firstEmpty.CubeRow, col = firstEmpty.CubeCol;
             var curr = this._buttons[row][col];
             var currColor = curr.BackColor;
-            curr.BackColor = Color.Green;
+            curr.BackColor = FinishColor;
             await Task.Delay(1);
             for (var index = 1; index < 10; index++)
                 if (SudokuSolver.IsValid2(aBoard, index, firstEmpty))
