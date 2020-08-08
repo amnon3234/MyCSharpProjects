@@ -1,6 +1,6 @@
 # All My C# Projects
 
-<p align="center"><img src="https://user-images.githubusercontent.com/58009020/82718018-9109d180-9ca8-11ea-80bc-5d29a74f5219.png" width = "600"/></p>
+<img src="https://user-images.githubusercontent.com/58009020/82718018-9109d180-9ca8-11ea-80bc-5d29a74f5219.png" width = "600"/>
 
 > why? Advance my coding skills and practice with C# GUI system
 
